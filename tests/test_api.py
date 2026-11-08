@@ -114,3 +114,21 @@ def test_ai_provider_error_is_shown(monkeypatch):
     response = client.post(f"/api/v1/documents/{upload.json()['id']}/summary")
     assert response.status_code == 503
     assert "API key not valid" in response.json()["detail"]
+
+
+
+def test_ai_groq_uses_openai_compatible_endpoint(monkeypatch):
+    import httpx
+    monkeypatch.setattr(settings, "ai_api_base", "https://api.groq.com/openai/v1")
+    monkeypatch.setattr(settings, "ai_api_key", "chave-falsa")
+    monkeypatch.setattr(settings, "ai_model", "openai/gpt-oss-20b")
+    captured = {}
+    body = {"choices": [{"message": {"role": "assistant", "content": "Resumo via Groq."}}]}
+    monkeypatch.setattr(httpx.AsyncClient, "post", _fake_post(200, body, captured))
+    upload = client.post("/api/v1/documents", files={"file": ("groq.txt", b"Texto de teste.", "text/plain")})
+    response = client.post(f"/api/v1/documents/{upload.json()['id']}/summary")
+    assert response.status_code == 200, response.text
+    assert response.json()["summary"] == "Resumo via Groq."
+    assert captured["url"] == "https://api.groq.com/openai/v1/chat/completions"
+    assert captured["headers"]["Authorization"] == "Bearer chave-falsa"
+    assert captured["json"]["model"] == "openai/gpt-oss-20b"

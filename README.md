@@ -14,9 +14,9 @@ Ler documentos extensos e localizar informações importantes pode consumir muit
 - [x] Listagem, consulta e exclusão de documentos.
 - [x] Recuperação simples de trechos relevantes para perguntas.
 - [x] Integração opcional com API compatível com OpenAI para resumo e perguntas.
-- [ ] OCR para PDFs digitalizados.
-- [ ] Autenticação, contas de usuário e isolamento multiusuário.
-- [ ] Interface web ou aplicativo mobile.
+- [X] OCR para PDFs digitalizados.
+- [X] Autenticação, contas de usuário e isolamento multiusuário.
+- [X] Interface web ou aplicativo mobile.
 
 ## Tecnologias
 Python 3.11+, FastAPI, SQLAlchemy, SQLite/PostgreSQL, PyMuPDF, HTTPX e pytest.
@@ -32,9 +32,18 @@ Python 3.11+, FastAPI, SQLAlchemy, SQLite/PostgreSQL, PyMuPDF, HTTPX e pytest.
 8. Acesse `http://127.0.0.1:8000/docs`.
 
 ## Configurar inteligência artificial
-A integração usa o formato de Chat Completions compatível com OpenAI. No `.env`, configure `AI_API_BASE`, `AI_API_KEY` e `AI_MODEL` conforme o provedor escolhido. Sem essas configurações, a API principal continua funcionando, mas os endpoints de resumo e perguntas retornam HTTP 503 explicando como configurar a IA. Nunca publique sua chave no GitHub.
+A integração usa o endpoint Chat Completions compatível com OpenAI. No `.env`, configure `AI_API_BASE`, `AI_API_KEY` e `AI_MODEL`. Sem essas configurações, a API principal continua funcionando, mas os endpoints de resumo e perguntas retornam HTTP 503 explicando como configurar a IA. Nunca publique sua chave no GitHub.
 
-**Usando o Gemini:** `AI_API_BASE=https://generativelanguage.googleapis.com/v1beta/openai/`, `AI_MODEL=gemini-2.5-flash` e `AI_API_KEY` com a chave do Google AI Studio. Se algo falhar, a resposta 503 mostra o código HTTP e a mensagem do provedor.
+**Usando o Groq (configuração recomendada e testada):**
+```env
+AI_API_BASE=https://api.groq.com/openai/v1
+AI_API_KEY=sua_chave_do_groq
+AI_MODEL=openai/gpt-oss-20b
+AI_TIMEOUT_SECONDS=60
+```
+A chave pode ser criada no painel do Groq. Neste projeto, que monta a URL com `httpx`, a base precisa terminar em `/openai/v1`; não use somente `https://api.groq.com` (essa base simplificada foi usada no teste separado com o SDK oficial).
+
+**Usando o Gemini:** `AI_API_BASE=https://generativelanguage.googleapis.com/v1beta/openai/`, `AI_MODEL=gemini-2.5-flash` e `AI_API_KEY` com a chave do Google AI Studio. Também é possível usar outros provedores que ofereçam endpoint compatível com Chat Completions.
 
 ## Endpoints
 | Método | Rota | Função |
