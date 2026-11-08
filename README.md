@@ -14,7 +14,7 @@ Ler documentos extensos e localizar informações importantes pode consumir muit
 - [x] Listagem, consulta e exclusão de documentos.
 - [x] Recuperação simples de trechos relevantes para perguntas.
 - [x] Integração opcional com API compatível com OpenAI para resumo e perguntas.
-- [X] OCR para PDFs digitalizados.
+
 
 
 ## Tecnologias
