@@ -15,8 +15,7 @@ Ler documentos extensos e localizar informações importantes pode consumir muit
 - [x] Recuperação simples de trechos relevantes para perguntas.
 - [x] Integração opcional com API compatível com OpenAI para resumo e perguntas.
 - [X] OCR para PDFs digitalizados.
-- [X] Autenticação, contas de usuário e isolamento multiusuário.
-- [X] Interface web ou aplicativo mobile.
+
 
 ## Tecnologias
 Python 3.11+, FastAPI, SQLAlchemy, SQLite/PostgreSQL, PyMuPDF, HTTPX e pytest.
