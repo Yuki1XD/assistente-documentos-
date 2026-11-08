@@ -34,6 +34,8 @@ Python 3.11+, FastAPI, SQLAlchemy, SQLite/PostgreSQL, PyMuPDF, HTTPX e pytest.
 ## Configurar inteligência artificial
 A integração usa o formato de Chat Completions compatível com OpenAI. No `.env`, configure `AI_API_BASE`, `AI_API_KEY` e `AI_MODEL` conforme o provedor escolhido. Sem essas configurações, a API principal continua funcionando, mas os endpoints de resumo e perguntas retornam HTTP 503 explicando como configurar a IA. Nunca publique sua chave no GitHub.
 
+**Usando o Gemini:** `AI_API_BASE=https://generativelanguage.googleapis.com/v1beta/openai/`, `AI_MODEL=gemini-2.5-flash` e `AI_API_KEY` com a chave do Google AI Studio. Se algo falhar, a resposta 503 mostra o código HTTP e a mensagem do provedor.
+
 ## Endpoints
 | Método | Rota | Função |
 |---|---|---|
